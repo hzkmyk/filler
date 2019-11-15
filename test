@@ -1,0 +1,2 @@
+TEST = $(addprefix $(SRCS), $(CFILES))
+TEST2 = $(addprefix $(SRCS), $(OFILES))
