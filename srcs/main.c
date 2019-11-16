@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:35:49 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/14 23:29:37 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/15 18:20:58 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int			main(void)
 	filler = init();
 	save_map(filler);
 	save_token(filler);
-	// write (1, "11 13\n", 6);
+	place(filler);
+	return (0);
 }

@@ -1,2 +1,6 @@
-TEST = $(addprefix $(SRCS), $(CFILES))
-TEST2 = $(addprefix $(SRCS), $(OFILES))
+	@make -C $(LIBFT)
+	@cd srcs;gcc $(FLG) $(CFILES) $(INCLUDES) 
+	@cd srcs;gcc $(OFILES) -L ../$(LIBFT) -o ../$(NAME) $(INCLUDES) -g
+
+		@make -C libft/ clean
+	@cd srcs;rm -f $(OFILES)

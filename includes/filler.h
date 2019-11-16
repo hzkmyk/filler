@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:17:03 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/14 23:28:14 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/15 18:15:48 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ typedef struct	s_filler
 	char	**token;
 }				t_filler;
 
-char		*gnl(int fd);
+char			*gnl(int fd);
 
-void		save_map(t_filler *filler);
-void		save_token(t_filler *filler);
+void			save_map(t_filler *filler);
+void			save_token(t_filler *filler);
+
+void			place(t_filler *filler);
 
 #endif
