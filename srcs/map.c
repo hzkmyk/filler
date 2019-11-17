@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:46:17 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/14 21:12:28 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/17 01:16:12 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,29 @@ void	update_map(t_filler *filler)
 	}
 }
 
+// void	enermy_zero(t_filler *filler)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (i < filler->height)
+// 	{
+// 		j = 0;
+// 		while (j < filler->width)
+// 		{
+// 			if (filler->map[i][j] == filler->enermy)
+// 				filler->map[i][j] = '0';
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
 void	save_map(t_filler *filler)
 {
 	map_size(filler);
 	init_map(filler);
 	update_map(filler);
+	// enermy_zero(filler);
 }

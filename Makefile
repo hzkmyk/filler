@@ -6,38 +6,41 @@
 #    By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 18:50:01 by hmiyake           #+#    #+#              #
-#    Updated: 2019/11/15 22:18:47 by hmiyake          ###   ########.fr        #
+#    Updated: 2019/11/17 02:17:49 by hmiyake          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = hmiyake.filler
+NAME := hmiyake.filler
 
-CFILES = main.c \
+CFILES := $(addprefix ./srcs/, main.c \
 		 map.c \
 		 token.c \
-		 place.c
+		 place.c \
+		 queue.c \
+		 testfunc.c)
 
-OFILES = $(CFILES:.c=.o)
+OFILES := $(CFILES:.c=.o)
 
-INCLUDES = -I includes
+INCLUDES := -I includes
+LIBFT := ./libft/
+LDFLAGS := -L $(LIBFT) -lft
 
-LIBFT = libft -lft
+CFLAGS := -Wall -Wextra -Wshadow -pedantic -g -std=c11
 
-FLG = -Wall -Werror -Wextra
+F := -fsanitize=address
 
-F = -fsanitize=address
+all: $(NAME) 
 
-
-all:
-	cd srcs;gcc $(FLG) $(CFILES) $(INCLUDES) -L ../$(LIBFT) -o ../$(NAME) $(INCLUDES)
-$(NAME):
+f:
+	gcc $(CFILES) -L libft/ -I libft/ $(F) -lft -g
+	
+$(NAME): $(OFILES)
 	@make -C $(LIBFT)
-	@cd srcs;gcc $(FLG) $(CFILES) $(INCLUDES) -L ../$(LIBFT) -o ../$(NAME) $(INCLUDES)
-
+	@$(CC) -o $@ $^ libft/libft.a $(LDFLAGS)
 
 clean:
 	@make -C libft/ clean
-	@cd srcs;rm -f $(OFILES)
+	@rm -f $(OFILES)
 
 fclean: clean
 	@make -C libft/ fclean

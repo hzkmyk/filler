@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:35:49 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/15 18:20:58 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/16 23:45:34 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_filler	*init(void)
 	filler->t_width = 0;
 	filler->map = NULL;
 	filler->token = NULL;
+	filler->visited = NULL;
 	return (filler);
 }
 
