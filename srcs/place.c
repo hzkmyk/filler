@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 22:03:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/17 21:20:59 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/18 00:45:22 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,70 @@ void	heat_map(t_filler *filler, t_queue *a, t_queue *b, char heat)
 	if (is_empty(b))
 		return ;
 	heat_map(filler, b, a, heat + 1);		
+}
+
+int		validate(t_filler *filler, int y, int x)
+{
+	int	i;
+	int	j;
+	int	once;
+
+	i = y;
+	j = x;
+	once = 0;
+	if ((j + filler->t_width > filler->width) || (i + filler->height > filler->height))
+		return (0);
+	while (y < filler->t_height + i)
+	{
+		j = x;
+		while (x < filler->t_width + j)
+		{
+			if (filler->map[i][j] == 0)
+				return (0);
+			else if (filler->map[i][j] == filler->player)
+			{
+				once++;
+				if (once > 1)
+					return (0);
+			}
+			x++;
+		}
+		y++;
+	}
+	if (once != 1)
+		return (0);
+	return (1);
+}
+
+void	whatsthebest(t_filler *filler)
+{
+	int	lowest;
+	int	y;
+	int	x;
+	int	yy;
+	int	xx;
+
+	lowest = 2147483647;
+	y = 0;
+	yy = 0;
+	while (y < filler->height)
+	{
+		x = 0;
+		while (x < filler->width)
+		{
+			if (validate(filler, y, x))
+			{
+				while (yy < filler->t_height)
+				{
+					xx = 0;
+					while (xx < filler->t_width)
+					{
+						
+					}
+				}
+			}
+		}
+	}
 }
 
 void	place(t_filler *filler)
