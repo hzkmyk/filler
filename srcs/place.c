@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 22:03:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/17 02:32:08 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/17 21:20:59 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,6 @@ void	visited_map(t_filler *filler)
 		ft_bzero(filler->visited[i], filler->width);
 		i++;
 	}
-}
-
-int		all_visited(t_filler *filler)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < filler->height)
-	{
-		j = 0;
-		while (j < filler->width)
-		{
-			if (filler->visited[i][j] != 1)
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
 }
 
 void	save_tar_coor(t_filler *filler, t_queue *a)
@@ -69,76 +49,37 @@ void	save_tar_coor(t_filler *filler, t_queue *a)
 	}
 }
 
+int		canheat_beplaced(t_filler *filler, t_coor coor)
+{
+	if (coor.x < 0 || coor.x >= filler->width)
+		return (0);
+	if (coor.y < 0 || coor.y >= filler->height)
+		return (0);
+	if (filler->map[coor.y][coor.x] != '.' || filler->visited[coor.y][coor.x])
+		return (0);
+	return (1);
+}
+
+void	set_heat(t_filler *filler, t_coor coor, int heat, t_queue *queue)
+{
+	if (canheat_beplaced(filler, (t_coor){coor.y, coor.x}))
+	{
+		filler->map[coor.y][coor.x] = heat;
+		enqueue(queue, coor.y, coor.x);
+		filler->visited[coor.y][coor.x] = 1;
+	}
+}
 
 void	place_heat(t_filler *filler, char heat, t_coor coor, t_queue *queue)
 {
-	int	nothing;
-	int i = coor.y;
-	int j = coor.x;
-
-	nothing = 0;
-	if (i > 0)
-	{
-		if (j > 0 && filler->map[i - 1][j - 1] == '.' && !filler->visited[i - 1][j - 1])
-		{
-
-			filler->map[i - 1][j - 1] = heat;
-			enqueue(queue, i - 1, j - 1);
-			filler->visited[i - 1][j - 1] = 1;
-		}
-		if (filler->map[i - 1][j] == '.' && !filler->visited[i - 1][j])
-		{
-
-			filler->map[i - 1][j] = heat;
-			enqueue(queue, i - 1, j);
-			filler->visited[i - 1][j] = 1;
-		}
-		if (j + 1 < filler->width && filler->map[i - 1][j + 1] == '.' && !filler->visited[i - 1][j + 1])
-		{
-
-			filler->map[i - 1][j + 1] = heat;
-			enqueue(queue, i - 1, j + 1);
-			filler->visited[i - 1][j + 1] = 1;
-		}
-	}
-	if (j > 0 && filler->map[i][j - 1] == '.' && !filler->visited[i][j - 1])
-	{
-			
-		filler->map[i][j - 1] = heat;
-		enqueue(queue, i, j - 1);
-		filler->visited[i][j - 1] = 1;
-	}
-	if (j + 1 < filler->width && filler->map[i][j + 1] == '.' && !filler->visited[i][j + 1])
-	{
-	
-		filler->map[i][j + 1] = heat;
-		enqueue(queue, i, j + 1);
-		filler->visited[i][j + 1] = 1;
-	}
-	if (i + 1 < filler->height)
-	{
-		if (j > 0 && filler->map[i + 1][j - 1] == '.' && !filler->visited[i + 1][j - 1])
-		{
-	
-			filler->map[i + 1][j - 1] = heat;
-			enqueue(queue, i + 1, j - 1);
-			filler->visited[i + 1][j - 1] = 1;
-		}
-		if (filler->map[i + 1][j] == '.' && !filler->visited[i + 1][j])
-		{
-
-			filler->map[i + 1][j] = heat;
-			enqueue(queue, i + 1, j);
-			filler->visited[i + 1][j] = 1;
-		}
-		if (j + 1 < filler->width && filler->map[i + 1][j + 1] == '.' && !filler->visited[i + 1][j + 1])
-		{
-
-			filler->map[i + 1][j + 1] = heat;
-			enqueue(queue, i + 1, j + 1);
-			filler->visited[i + 1][j + 1] = 1;
-		}
-	}
+	set_heat(filler, (t_coor){coor.y, coor.x - 1}, heat, queue);
+	set_heat(filler, (t_coor){coor.y, coor.x + 1}, heat, queue);
+	set_heat(filler, (t_coor){coor.y - 1, coor.x}, heat, queue);
+	set_heat(filler, (t_coor){coor.y - 1, coor.x - 1}, heat, queue);
+	set_heat(filler, (t_coor){coor.y - 1, coor.x + 1}, heat, queue);
+	set_heat(filler, (t_coor){coor.y + 1, coor.x}, heat, queue);
+	set_heat(filler, (t_coor){coor.y + 1, coor.x - 1}, heat, queue);
+	set_heat(filler, (t_coor){coor.y + 1, coor.x + 1}, heat, queue);
 }
 
 void printMap(char **map, int height, int width, int heat)
@@ -183,4 +124,5 @@ void	place(t_filler *filler)
 	visited_map(filler);
 	save_tar_coor(filler, queue_a);
 	heat_map(filler, queue_a, queue_b, 1);
+	
 }

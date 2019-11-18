@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:17:03 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/17 02:15:41 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/17 17:51:35 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct	s_filler
 
 typedef struct s_coor
 {
-	int				x;
 	int				y;
+	int				x;
 }				t_coor;
 
 typedef	struct	s_node
