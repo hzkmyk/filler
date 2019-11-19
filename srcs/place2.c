@@ -123,7 +123,7 @@ void	place(t_filler *filler)
 	i = 0;
 	j = 0;
 	// heat_map(filler);
-	printf("11 12\n");
+	// printf("11 12\n");
 	// for (int ii = 0; ii < filler->height; ii++)
 	// 	fprintf(f, "%s\n", filler->map[ii]);
 	// while (i < filler->height)

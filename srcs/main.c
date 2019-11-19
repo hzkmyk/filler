@@ -6,11 +6,27 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:35:49 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 01:07:29 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/18 23:37:18 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/filler.h"
+
+void		free_everything(t_filler *filler)
+{
+	// ft_free(filler->map);
+	for (int i = 0; i < filler->height; i++)
+		free(filler->map[i]);
+	free(filler->map);
+	for (int i = 0; i < filler->t_height; i++)
+		free(filler->token[i]);
+	free(filler->token);
+	for (int i = 0; i < filler->height; i++)
+		free(filler->visited[i]);
+	free(filler->visited);
+	// ft_free(filler->visited);
+	//free(filler);
+}
 
 char		*gnl(int fd) {
     static char buf[256];
@@ -56,10 +72,19 @@ int			main(void)
 {
 	t_filler	*filler;
 
-	filler = init();
-	save_map(filler);
-	save_token(filler);
-	place(filler);
-
-	return (0);
+		filler = init();
+	while (1)
+	{
+		save_map(filler);
+		save_token(filler);
+		place(filler);
+		free_everything(filler);
+	}
+		// filler = init();
+		// save_map(filler);
+		// save_token(filler);
+		// place(filler);
+		// free_everything(filler);
+	// // printf("11 12\n");
+	// printf("12 12\n");
 }

@@ -6,26 +6,12 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 22:03:15 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 00:45:22 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/18 23:36:06 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/filler.h"
 FILE	*f;
-
-void	visited_map(t_filler *filler)
-{
-	int	i;
-
-	i = 0;
-	filler->visited = (char **)malloc(sizeof(char *) * filler->height);
-	while (i < filler->height)
-	{
-		filler->visited[i] = (char *)malloc(sizeof(char) * filler->width);
-		ft_bzero(filler->visited[i], filler->width);
-		i++;
-	}
-}
 
 void	save_tar_coor(t_filler *filler, t_queue *a)
 {
@@ -82,9 +68,8 @@ void	place_heat(t_filler *filler, char heat, t_coor coor, t_queue *queue)
 	set_heat(filler, (t_coor){coor.y + 1, coor.x + 1}, heat, queue);
 }
 
-void printMap(char **map, int height, int width, int heat)
+void printMap(char **map, int height, int width)
 {
-	fprintf(f, "----:   on heat: %d\n", heat);
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
@@ -103,10 +88,6 @@ void	heat_map(t_filler *filler, t_queue *a, t_queue *b, char heat)
 		coor = dequeue(a);
 		place_heat(filler, heat, coor, b); 
 	}
-	printMap(filler->map, filler->height, filler->width, heat);
-	fprintf(f, "----Visited\n");
-	printMap(filler->visited, filler->height, filler->width, heat);
-
 	if (is_empty(b))
 		return ;
 	heat_map(filler, b, a, heat + 1);		
@@ -118,27 +99,24 @@ int		validate(t_filler *filler, int y, int x)
 	int	j;
 	int	once;
 
-	i = y;
-	j = x;
+	i = filler->t_height;
+	j = filler->t_width;
 	once = 0;
-	if ((j + filler->t_width > filler->width) || (i + filler->height > filler->height))
+	if ((x + j > filler->width) || (y + i > filler->height))
 		return (0);
-	while (y < filler->t_height + i)
+	while (i--)
 	{
-		j = x;
-		while (x < filler->t_width + j)
+		j = filler->t_width;
+		while (j--)
 		{
-			if (filler->map[i][j] == 0)
-				return (0);
-			else if (filler->map[i][j] == filler->player)
+			if (filler->token[i][j] == '*')
 			{
-				once++;
-				if (once > 1)
+				if (ft_tolower(filler->map[y + i][x + j]) == filler->enermy)
 					return (0);
+				if (ft_tolower(filler->map[y + i][x + j]) == filler->player)
+					once++;
 			}
-			x++;
 		}
-		y++;
 	}
 	if (once != 1)
 		return (0);
@@ -147,33 +125,51 @@ int		validate(t_filler *filler, int y, int x)
 
 void	whatsthebest(t_filler *filler)
 {
-	int	lowest;
-	int	y;
-	int	x;
-	int	yy;
-	int	xx;
+	int		lowest[2];
+	t_coor	coor;
+	t_coor	best_coor;
+	int		yy;
+	int		xx;
 
-	lowest = 2147483647;
-	y = 0;
+	lowest[0] = 2147483647;
+	coor.y = 0;
 	yy = 0;
-	while (y < filler->height)
+	best_coor = (t_coor){0, 0};
+	while (coor.y < filler->height)
 	{
-		x = 0;
-		while (x < filler->width)
+		coor.x = 0;
+		while (coor.x < filler->width)
 		{
-			if (validate(filler, y, x))
+			if (validate(filler, coor.y, coor.x))
 			{
+				lowest[1] = 0;
 				while (yy < filler->t_height)
 				{
 					xx = 0;
 					while (xx < filler->t_width)
 					{
-						
+						if (filler->token[yy][xx] == '*')
+							lowest[1] += filler->map[coor.y + yy][coor.x + xx];
+						xx++;
 					}
+					yy++;
+				}
+				if (lowest[0] > lowest[1])
+				{
+					lowest[0] = lowest[1];
+					best_coor = (t_coor){coor.y, coor.x};
 				}
 			}
+			coor.x++;
 		}
+		coor.y++;
 	}
+	fprintf(f, "best y:%d best x:%d\n", best_coor.y, best_coor.x);
+	write (1, ft_itoa(best_coor.y), ft_strlen(ft_itoa(best_coor.y)));
+	write(1, " ", 1);
+	write (1, ft_itoa(best_coor.x), ft_strlen(ft_itoa(best_coor.x)));
+	write (1, "\n", 1);
+	// printf("%d %d\n", best_coor.y, best_coor.x);
 }
 
 void	place(t_filler *filler)
@@ -182,11 +178,12 @@ void	place(t_filler *filler)
 	t_queue	*queue_b;
 
 	f = fopen("test", "w");
-
 	queue_a = q_init();
 	queue_b = q_init();
 	visited_map(filler);
 	save_tar_coor(filler, queue_a);
 	heat_map(filler, queue_a, queue_b, 1);
-	
+	free(queue_a);
+	free(queue_b);
+	whatsthebest(filler);
 }
