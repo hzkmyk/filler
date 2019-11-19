@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:35:49 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 23:37:18 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/19 09:46:21 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			main(void)
 {
 	t_filler	*filler;
 
-		filler = init();
+	filler = init();
 	while (1)
 	{
 		save_map(filler);
@@ -80,11 +80,4 @@ int			main(void)
 		place(filler);
 		free_everything(filler);
 	}
-		// filler = init();
-		// save_map(filler);
-		// save_token(filler);
-		// place(filler);
-		// free_everything(filler);
-	// // printf("11 12\n");
-	// printf("12 12\n");
 }
