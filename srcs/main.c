@@ -6,39 +6,28 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:35:49 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/19 09:46:21 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/19 23:11:56 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/filler.h"
 
-void		free_everything(t_filler *filler)
+char		*gnl(int fd)
 {
-	// ft_free(filler->map);
-	for (int i = 0; i < filler->height; i++)
-		free(filler->map[i]);
-	free(filler->map);
-	for (int i = 0; i < filler->t_height; i++)
-		free(filler->token[i]);
-	free(filler->token);
-	for (int i = 0; i < filler->height; i++)
-		free(filler->visited[i]);
-	free(filler->visited);
-	// ft_free(filler->visited);
-	//free(filler);
-}
+	static char	buf[256];
+	int			k;
+	char		c;
 
-char		*gnl(int fd) {
-    static char buf[256];
-    int k = 0;
-    char c = 0;
-    while (read(fd, &c, 1) > 0) {
-        if (c == '\n' || k > 255)
-            break;
-        buf[k++] = c;
-    }
-    buf[k] = '\0';
-    return buf;
+	k = 0;
+	c = 0;
+	while (read(fd, &c, 1) > 0)
+	{
+		if (c == '\n' || k > 255)
+			break ;
+		buf[k++] = c;
+	}
+	buf[k] = '\0';
+	return (buf);
 }
 
 char		set_player(void)
@@ -47,7 +36,7 @@ char		set_player(void)
 	char	player;
 
 	input = gnl(0);
-	player = ft_strncmp("$$$ exec p1", input, 11) ? 'x': 'o';
+	player = ft_strncmp("$$$ exec p1", input, 11) ? 'x' : 'o';
 	return (player);
 }
 
@@ -57,9 +46,10 @@ t_filler	*init(void)
 
 	filler = (t_filler *)malloc(sizeof(t_filler));
 	filler->player = set_player();
-	filler->enermy = filler->player == 'o' ? 'x': 'o';
+	filler->enermy = filler->player == 'o' ? 'x' : 'o';
 	filler->height = 0;
 	filler->width = 0;
+	filler->origin_t_height = 0;
 	filler->t_height = 0;
 	filler->t_width = 0;
 	filler->map = NULL;

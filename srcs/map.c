@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:46:17 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 23:16:26 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/19 20:43:26 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,11 @@ void	map_size(t_filler *filler)
 void	init_map(t_filler *filler)
 {
 	int		i;
-
-	i = 0;
-	filler->map = (char **)malloc(sizeof(char *) * filler->height);
-	while (i < filler->height)
-	{
-		filler->map[i] = (char *)malloc(sizeof(char) * filler->width);
-		i++;
-	}
-}
-
-void	update_map(t_filler *filler)
-{
-	int		i;
 	char	*temp;
 
 	i = 0;
 	gnl(0);
+	filler->map = (char **)malloc(sizeof(char *) * filler->height);
 	while (i < filler->height)
 	{
 		temp = gnl(0);
@@ -68,29 +56,8 @@ void	visited_map(t_filler *filler)
 	}
 }
 
-// void	enermy_zero(t_filler *filler)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (i < filler->height)
-// 	{
-// 		j = 0;
-// 		while (j < filler->width)
-// 		{
-// 			if (filler->map[i][j] == filler->enermy)
-// 				filler->map[i][j] = '0';
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
 void	save_map(t_filler *filler)
 {
 	map_size(filler);
 	init_map(filler);
-	update_map(filler);
-	// enermy_zero(filler);
 }

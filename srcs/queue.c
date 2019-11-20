@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 21:06:39 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 22:23:37 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/19 23:14:00 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	enqueue(t_queue *queue, int y, int x)
 	node->coor.x = x;
 	node->coor.y = y;
 	node->next = NULL;
-
 	if (is_empty(queue))
 		queue->first = node;
 	else
@@ -58,9 +57,9 @@ t_coor	dequeue(t_queue *queue)
 		queue->first = queue->first->next;
 		xy.x = temp->coor.x;
 		xy.y = temp->coor.y;
-		free (temp);
+		free(temp);
 		if (queue->first == NULL)
-			queue->last = NULL;	
+			queue->last = NULL;
 	}
 	return (xy);
 }

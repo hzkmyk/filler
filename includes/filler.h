@@ -6,7 +6,7 @@
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 19:17:03 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/18 22:10:12 by hmiyake          ###   ########.fr       */
+/*   Updated: 2019/11/19 23:44:06 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct		s_filler
 	char			enermy;
 	int				height;
 	int				width;
+	int				origin_t_height;
 	int				t_height;
 	int				t_width;
 	char			**map;
@@ -59,4 +60,11 @@ t_coor				dequeue(t_queue *queue);
 int					is_empty(t_queue *queue);
 
 void				visited_map(t_filler *filler);
+
+void				free_everything(t_filler *filler);
+
+void				save_tar_coor(t_filler *filler, t_queue *a);
+void				heat_map(t_filler *filler, t_queue *a,
+t_queue *b, char heat);
+
 #endif

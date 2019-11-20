@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiyake <hmiyake@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/14 19:18:26 by hmiyake           #+#    #+#             */
-/*   Updated: 2019/11/19 23:45:28 by hmiyake          ###   ########.fr       */
+/*   Created: 2019/11/19 23:11:19 by hmiyake           #+#    #+#             */
+/*   Updated: 2019/11/20 00:48:44 by hmiyake          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/filler.h"
 
-void	ft_free(char **as)
+void		free_array(char **arr, int size)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (as[i])
+	while (i < size)
 	{
-		ft_strdel(&(as[i]));
+		free(arr[i]);
 		i++;
 	}
-	free(as);
+	free(arr);
+}
+
+void		free_everything(t_filler *filler)
+{
+	free_array(filler->map, filler->height);
+	free_array(filler->token, filler->origin_t_height);
+	free_array(filler->visited, filler->height);
 }
